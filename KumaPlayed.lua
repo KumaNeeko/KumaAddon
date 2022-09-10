@@ -19,19 +19,18 @@ PlayText:SetJustifyH("LEFT");
 PlayedFrame:Hide()
 
 function KumaAddon_OnUpdate(self, elapsed)
-    self.elapsed = (self.elapsed or 0) + elapsed;
+   self.elapsed = (self.elapsed or 0) + elapsed;
 	if (self.elapsed >= 1.0) then -- The 1.0 is the delay, in seconds, between each OnUpdate
 		XPCalc = 100 / (UnitXP("player") / UnitXPMax("player") * 100) * TimeLevel
 		
-        PlayText:SetText("Total time played: "..KumaSecondsToDays(TimeTotal).."\nTime played this level: "..KumaSecondsToDays(TimeLevel).."\nEstimated time for this Level: "..KumaSecondsToDays(XPCalc).."\nEstimated time for level up: "..KumaSecondsToDays(XPCalc-TimeLevel));
-        width = PlayText:GetStringWidth() + 10;
-        PlayedFrame:SetWidth(width);
+      PlayText:SetText("Total time played: "..KumaSecondsToDays(TimeTotal).."\nTime played this level: "..KumaSecondsToDays(TimeLevel).."\nEstimated time for this Level: "..KumaSecondsToDays(XPCalc).."\nEstimated time for level up: "..KumaSecondsToDays(XPCalc-TimeLevel));
+      PlayedFrame:SetWidth(PlayText:GetStringWidth() + 10);
          
-        TimeLevel = TimeLevel + 1
+      TimeLevel = TimeLevel + 1
 		TimeTotal = TimeTotal + 1
 		
-        self.elapsed = 0
-    end
+      self.elapsed = 0
+   end
 end
 
 local o = ChatFrame_DisplayTimePlayed
@@ -128,15 +127,6 @@ function KumaTimeCalc(fUnit, mUnit, fullString)
 end
 
 function KumaLevels()	
-	newKumaDB = {}
-	for level,time in pairs(KumaDB) do
-		local int = string.match(level , "%d+")
-
-		newKumaDB[tonumber(int)] = time
-	end
-	
-	KumaDB = newKumaDB
-	
 	local playerName = UnitName("player")	
 	local realmName = GetRealmName()
 	
